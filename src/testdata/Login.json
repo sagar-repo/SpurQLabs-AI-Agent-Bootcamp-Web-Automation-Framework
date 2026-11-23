@@ -1,0 +1,28 @@
+{
+  "scenarios": [
+    {
+      "scenarioName": "Successful login with valid credentials",
+      "testData": {
+        "username": "test_userRR",
+        "password": "test123",
+        "welcomeUser": "Welcome test_userRR"
+      }
+    },
+    {
+      "scenarioName": "Login with invalid credentials",
+      "testData": {
+        "invalidUsername": "invaliduser999",
+        "invalidPassword": "WrongPass@123",
+        "invalidCredentialsError": "User does not exist."
+      }
+    },
+    {
+      "scenarioName": "Login with empty credentials",
+      "testData": {
+        "username": "",
+        "password": "",
+        "emptyFieldsError": "Please fill out Username and Password."
+      }
+    }
+  ]
+}

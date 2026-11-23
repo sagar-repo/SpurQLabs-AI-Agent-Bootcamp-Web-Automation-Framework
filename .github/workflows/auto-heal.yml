@@ -1,0 +1,76 @@
+name: Run Tests
+
+# Runs the Cucumber suite and uploads the JSON report as an artifact named
+# 'cucumber-report'. The auto-heal agent reads the latest FAILED run of this
+# workflow and that artifact, so the upload must run even when tests fail
+# (if: always()). workflow_dispatch lets the agent re-trigger CI on a heal branch.
+#
+# CI is driven by `push` on every branch EXCEPT heal/** and main. We intentionally
+# do NOT add a `pull_request` trigger: with push covering branches, a PR would make
+# the same commit run twice (push + PR). The agent finds its run by commit SHA.
+#
+# Heal branches (heal/**) are excluded from push because the auto-heal agent
+# dispatches this workflow for them with a `name_filter` so CI re-runs ONLY the
+# healed (previously-failing) scenarios — not the whole suite. Letting push also
+# fire would run the full suite in parallel, defeating the purpose.
+#
+# main is excluded because pushes to main are handled by qa-ci.yml instead.
+on:
+  push:
+    branches-ignore: ["heal/**", "main"]
+  workflow_dispatch:
+    inputs:
+      tags:
+        description: "Cucumber tag expression to run (e.g. @Smoke). Blank = the default login set."
+        required: false
+        default: ""
+      name_filter:
+        description: "Pipe-separated scenario names to run (auto-heal healed-only run). Blank = use tags."
+        required: false
+        default: ""
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Run Cucumber tests
+        # Healed-only: when the auto-heal agent dispatches with a `name_filter` (pipe-
+        # separated scenario names), run ONLY those scenarios by name and apply no tag
+        # filter. Otherwise the tag behaviour is unchanged: a manual workflow_dispatch
+        # `tags` input, or the default login set on a normal push.
+        env:
+          NAME_FILTER: ${{ github.event.inputs.name_filter }}
+          TAGS: ${{ github.event.inputs.tags || '@Login' }}
+        shell: bash
+        run: |
+          if [ -n "$NAME_FILTER" ]; then
+            unset TAGS   # healed-only: select by scenario name, not tags
+            IFS='|' read -ra NAMES <<< "$NAME_FILTER"
+            ARGS=()
+            for n in "${NAMES[@]}"; do ARGS+=(--name "$n"); done
+            echo "Healed-only run — scenarios: ${ARGS[*]}"
+            npx cucumber-js --config src/config/cucumber.config.js "${ARGS[@]}"
+          else
+            npx cucumber-js --config src/config/cucumber.config.js
+          fi
+
+      - name: Upload cucumber report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cucumber-report
+          path: reports/cucumber-report.json
+          if-no-files-found: warn

@@ -1,0 +1,15 @@
+{
+  "loginMenu": "#login2",
+  "loginMenuLink": "#login2",
+  "loginModal": "#logInModal",
+  "loginModalTitle": "#logInModalLabel",
+  "username": "#loginusername",
+  "invalidUsername": "#loginusername",
+  "usernameField": "#loginusername",
+  "password": "#loginpassword",
+  "invalidPassword": "#loginpassword",
+  "passwordField": "#loginpassword",
+  "loginButton": "button[onclick='logIn()']",
+  "closeButton": "#logInModal .close",
+  "modalCloseButton": "#logInModal button[data-dismiss='modal']"
+}

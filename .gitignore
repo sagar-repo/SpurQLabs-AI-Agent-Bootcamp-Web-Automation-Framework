@@ -1,0 +1,41 @@
+# Node modules
+node_modules/
+
+# Reports
+reports/
+test-results/
+playwright-report/
+screenshots/
+performance_reports/
+
+# Environment files
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Test artifacts
+*.mp4
+*.webm
+trace.zip
+.playwright-mcp/
+.mcp.json
+
+# SpurQuality — contains a live credential
+.vscode/mcp.json
+
+# Performance run output
+perf_run_YOGE-TC-856/
+
+# Claude local config (contains credentials)
+.claude/

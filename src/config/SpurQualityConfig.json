@@ -1,0 +1,13 @@
+{
+  "email": "yogesh.dhole@spurqlabs.com",
+  "userName": "Rutuja Raut",
+  "projectName": "Yogesh",
+  "tool": "Spur Validator",
+  "organizationName": "staging",
+  "designation": "SDET",
+  "report": "PostExecution",
+  "templateName": "Default Template",
+  "testExecutionAssignee": "Rutuja Raut",
+  "testCaseExecutedBy": "Rutuja Raut",
+  "userSecretKey": "REPLACE_ME"
+}

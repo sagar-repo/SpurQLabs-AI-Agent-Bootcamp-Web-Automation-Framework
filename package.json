@@ -1,0 +1,46 @@
+{
+  "name": "bootcamp-demoblaze-ai-automation-framework",
+  "version": "1.0.0",
+  "description": "Cucumber + TestNG + Playwright + JavaScript Test Automation Framework",
+  "main": "index.js",
+  "scripts": {
+    "test": "node src/config/runner.js --a11y-only",
+    "test:parallel": "node src/config/runner.js --a11y-only --parallel 2",
+    "test:tag": "node src/config/runner.js --a11y-only --tags",
+    "test:smoke": "node src/config/runner.js --a11y-only --tags @Smoke",
+    "test:regression": "node src/config/runner.js --a11y-only --tags @Regression",
+    "test:negative": "node src/config/runner.js --a11y-only --tags @NegativeTest",
+    "test:valid-login": "node src/config/runner.js --a11y-only --tags @ValidLogin",
+    "test:smoke:sq": "node src/config/runner.js --tags @Smoke",
+    "test:regression:sq": "node src/config/runner.js --tags @Regression",
+    "test:negative:sq": "node src/config/runner.js --tags @NegativeTest",
+    "test:valid-login:sq": "node src/config/runner.js --tags @ValidLogin",
+    "test:all:sq": "node src/config/runner.js",
+    "test:tag:a11y": "node src/config/runner.js --a11y-only --tags",
+    "test:valid-login:a11y": "node src/config/runner.js --a11y-only --tags @ValidLogin",
+    "test:smoke:a11y": "node src/config/runner.js --a11y-only --tags @Smoke",
+    "test:all:a11y": "node src/config/runner.js --a11y-only",
+    "spurquality": "node -e \"require('./src/utils/ReportGenerator').generate()\"",
+    "report": "node src/utils/reporter.js"
+  },
+  "keywords": [
+    "cucumber",
+    "playwright",
+    "testng",
+    "automation",
+    "web"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@cucumber/cucumber": "^10.3.1",
+    "@playwright/test": "^1.42.1",
+    "axe-core": "^4.12.1",
+    "form-data": "^4.0.5",
+    "playwright": "^1.42.1"
+  },
+  "devDependencies": {
+    "cucumber-html-reporter": "^7.1.1",
+    "multiple-cucumber-html-reporter": "^3.5.0"
+  }
+}
