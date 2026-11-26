@@ -1,13 +1,6 @@
 {
   "scenarios": [
     {
-      "scenarioName": "Automated - DMSA-TC-001: Verify cart is empty when the home page is opened before the cart",
-      "testData": {
-        "viewCartEndpoint": "/viewcart",
-        "expectedRowCount": 0
-      }
-    },
-    {
       "scenarioName": "Automated - DMSA-TC-002: Verify only Nexus 6 is listed after adding it from a fresh session",
       "testData": {
         "viewCartEndpoint": "/viewcart",

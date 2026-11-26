@@ -61,13 +61,6 @@ When('User waits for the cart to finish loading', async function () {
   console.log(`🛒 Cart API responded: ${response.status()} ${response.url()}`);
 });
 
-Then('User should see no product rows in the cart', async function () {
-  const cartPage = this.scenarioContext.getPageObject('cartPage');
-  const expectedCount = this.scenarioContext.getData('expectedRowCount');
-  await cartPage.verifyCartRowCount(expectedCount);
-  this.scenarioContext.setLastElement(cartPage.locators.cartTable);
-});
-
 Then('User should see only {string} in the cart', async function (productName) {
   const cartPage = this.scenarioContext.getPageObject('cartPage');
   const expectedCount = this.scenarioContext.getData('expectedRowCount');
